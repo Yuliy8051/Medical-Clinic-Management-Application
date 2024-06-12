@@ -166,8 +166,6 @@ alter table Feedbacks
     add foreign key (visit_ID) references Visits (ID);
 alter table Surveys
     add foreign key (patient_ID) references Users (ID);
-
-delimiter $$$
 create trigger is_user_employee1
     before insert
     on Employees
@@ -178,8 +176,6 @@ begin
             SET MESSAGE_TEXT = 'this user is a patient';
     end if;
 end;
-$$$
-delimiter $$$
 create trigger is_user_employee2
     before update
     on Employees
@@ -190,10 +186,6 @@ begin
             SET MESSAGE_TEXT = 'this user is a patient';
     end if;
 end;
-$$$
-
-
-delimiter $$$
 create trigger is_user_patient_chats1
     before insert
     on Chats
@@ -203,8 +195,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-delimiter $$$
+end;
 create trigger is_user_patient_chats2
     before update
     on Chats
@@ -214,9 +205,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-
-delimiter $$$
+end;
 create trigger is_user_patient_cardiologist_visits1
     before insert
     on Cardiologist_visits
@@ -226,8 +215,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-delimiter $$$
+end;
 create trigger is_user_patient_cardiologist_visits2
     before update
     on Cardiologist_visits
@@ -237,9 +225,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-
-delimiter $$$
+end;
 create trigger is_user_patient_documents1
     before insert
     on Documents
@@ -249,8 +235,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-delimiter $$$
+end;
 create trigger is_user_patient_documents2
     before update
     on Documents
@@ -260,9 +245,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-
-delimiter $$$
+end;
 create trigger is_user_patient_surveys1
     before insert
     on Surveys
@@ -272,8 +255,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-delimiter $$$
+end;
 create trigger is_user_patient_surveys2
     before update
     on Surveys
@@ -283,9 +265,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-
-delimiter $$$
+end;
 create trigger is_user_patient_visits1
     before insert
     on Visits
@@ -295,8 +275,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-delimiter $$$
+end;
 create trigger is_user_patient_visits2
     before update
     on Visits
@@ -306,9 +285,7 @@ begin
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'this user is not a patient';
     end if;
-end $$$
-
-delimiter $$$
+end;
 create trigger add_history
     after update
     on Users
@@ -320,8 +297,7 @@ begin
         values (json_object('first_name', old.first_name, 'last_name', old.last_name, 'email', old.email, 'password',
                             old.password, 'push', old.push, 'role_ID', old.role_ID), current_timestamp(), new.ID);
     end if;
-end $$$
-
+end;
 insert into Categories (category)
 values ('Diagnostic'),
        ('Therapeutic'),
