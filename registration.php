@@ -6,7 +6,7 @@ if ($database->errorCode())
     die('end');
 $name = $_POST['name'];
 $surname = $_POST['surname'];
-$email = $_POST['email'];
+$email = strtolower($_POST['email']);
 $password = $_POST['password'];
 $pattern = "/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>])[A-Za-z\d!@#$%^&*(),.?:{}|<>]{6,}$/";
 if (isset($_POST['push']))
@@ -16,8 +16,8 @@ else
 if (preg_match($pattern, $password)){
     $password = password_hash($password, PASSWORD_DEFAULT);
     $patient = new Patient($name, $surname, $email, $password, $push);
-    $patient->insert_patient($database);
-    echo "good";
+    $patient->insertPatient($database);
+    header('Location:index.php');
 }
 else {
     require_once "registration.html";
