@@ -32,7 +32,7 @@ create table Procedures
 (
     ID          int primary key auto_increment,
     name        varchar(255)   not null unique,
-    description text    not null,
+    description text           not null,
     price       decimal(10, 2) not null,
     category_ID smallint       not null
 );
@@ -69,9 +69,9 @@ create table Cardiologist_visits
 create table Users_history
 (
     ID          int auto_increment primary key,
-    information json     not null,
+    information json      not null,
     change_time timestamp not null,
-    user_ID     int      not null
+    user_ID     int       not null
 );
 create table Chats
 (
@@ -296,6 +296,36 @@ begin
         insert into Users_history (information, change_time, user_ID)
         values (json_object('first_name', old.first_name, 'last_name', old.last_name, 'email', old.email, 'password',
                             old.password, 'push', old.push, 'role_ID', old.role_ID), current_timestamp(), new.ID);
+    end if;
+end;
+create trigger is_cardiologist1
+    before insert
+    on Cardiologist_visits
+    for each row
+begin
+    if (select count(Employees.ID)
+        from Employees
+                 join Users on Employees.ID = Users.ID
+        where Employees.ID = new.doctor_ID
+          and medical_specialisation_ID = 3
+          and role_ID = 3) = 0 then
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'this doctor is not a cardiologist';
+    end if;
+end;
+create trigger is_cardiologist2
+    before update
+    on Cardiologist_visits
+    for each row
+begin
+    if (select count(Users.ID)
+        from Employees
+                 join Users on Employees.ID = Users.ID
+        where Employees.ID = new.doctor_ID
+          and medical_specialisation_ID = 3
+          and role_ID = 3) = 0 then
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'this doctor is not a cardiologist';
     end if;
 end;
 insert into Categories (category)
