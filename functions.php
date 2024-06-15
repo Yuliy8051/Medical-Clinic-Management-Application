@@ -3,7 +3,7 @@ function connect_to_database(): PDO
 {
     return new PDO('mysql:host=localhost;dbname=medical_clinic_management_application', 'root', '');
 }
-function create_database($database)
+function create_database($database): void
 {
     $database->beginTransaction();
     try {
@@ -11,8 +11,5 @@ function create_database($database)
         $database->query($query);
     }catch (Exception $exception){
         $database->rollBack();
-        echo 'bad';
     }
 }
-
-
