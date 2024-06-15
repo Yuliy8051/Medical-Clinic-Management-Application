@@ -60,10 +60,25 @@ class User
     }
     public function printProcedures(PDO $database):void
     {
-        $query = "select * from procedures join categories on procedures.category_ID = categories.ID";
+        if (isset($_COOKIE['category'])){
+            $query = "select * from procedures join categories on procedures.category_ID = categories.ID where procedures.category_ID = {$_COOKIE['category']}";
+            setcookie('category', 0, time() - 60*60*24);
+        }
+        else{
+            $query = "select * from procedures join categories on procedures.category_ID = categories.ID";
+        }
         $query_result = $database->query($query);
         while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
             echo "<tr><td>{$result['name']}</td><td>{$result['description']}</td><td>{$result['price']} zł</td><td>{$result['category']}</td></tr>";
+        }
+
+    }
+    public function printCategories(PDO $database):void
+    {
+        $query = "select * from categories;";
+        $query_result = $database->query($query);
+        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
+            printf("<option value='%d'>%s</option>", $result['ID'], $result['category']);
         }
     }
     public static function create(PDO $database, string $email, string $password)
