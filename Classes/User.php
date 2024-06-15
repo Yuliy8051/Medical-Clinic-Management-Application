@@ -27,6 +27,37 @@ class User
     {
         return $this->role_ID;
     }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function changeEmail(PDO $database):void
+    {
+        $email = strtolower($_POST['new_email']);
+        $query = "update users set email = '$email' where ID = $this->ID;";
+        $database->query($query);
+        $this->setEmail($email);
+    }
+    public function changePassword(PDO $database)
+    {
+        $password = $_POST['new_password'];
+        $pattern = "/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>])[A-Za-z\d!@#$%^&*(),.?:{}|<>]{6,}$/";
+        if (preg_match($pattern, $password)) {
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $query = "update users set password = '$password' where ID = $this->ID;";
+            $database->query($query);
+            $this->setPassword($password);
+        }
+        else
+            echo "The password should consist of at least 6 characters and contain at least 1 uppercase letter, a number and a special character";
+    }
     public static function create(PDO $database, string $email, string $password)
     {
         $email = strtolower($email);
