@@ -58,6 +58,14 @@ class User
         else
             echo "The password should consist of at least 6 characters and contain at least 1 uppercase letter, a number and a special character";
     }
+    public function printProcedures(PDO $database):void
+    {
+        $query = "select * from procedures join categories on procedures.category_ID = categories.ID";
+        $query_result = $database->query($query);
+        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
+            echo "<tr><td>{$result['name']}</td><td>{$result['description']}</td><td>{$result['price']} zł</td><td>{$result['category']}</td></tr>";
+        }
+    }
     public static function create(PDO $database, string $email, string $password)
     {
         $email = strtolower($email);
