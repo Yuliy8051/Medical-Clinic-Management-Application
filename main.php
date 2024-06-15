@@ -8,3 +8,4 @@ if ($_SESSION['user']->getRoleID() == 3)
     echo '<a href="doctor.php"><button>Doctor panel</button></a>';
 if ($_SESSION['user']->getRoleID() == 1)
     echo '<a href="cardiology_visits.php"><button>My cardiology visits</button></a>';
+echo '<a href="edit_my_account.php"><button>Edit my account</button></a>';
