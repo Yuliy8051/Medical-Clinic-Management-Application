@@ -10,3 +10,4 @@ if ($_SESSION['user']->getRoleID() == 1)
     echo '<a href="cardiology_visits.php"><button>My cardiology visits</button></a>';
 echo '<a href="edit_my_account.php"><button>Edit my account</button></a>';
 echo '<a href="medical_procedures.php"><button>Medical procedures</button></a>';
+echo '<a href="doctor_list.php"><button>Doctors list</button></a>';

@@ -58,6 +58,16 @@ class User
         else
             echo "The password should consist of at least 6 characters and contain at least 1 uppercase letter, a number and a special character";
     }
+    public function printDoctors(PDO $database):void
+    {
+        $query = "select users.first_name, users.last_name, employees.biography, employees.qualification, employees.photo, medical_specialisations.medical_specialisation 
+from users join employees on users.ID = employees.ID join medical_specialisations on employees.medical_specialisation_ID = medical_specialisations.ID where role_ID = 3;";
+        $query_result = $database->query($query);
+        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
+            $img = base64_encode($result['photo']);
+            echo "<tr><td>{$result['first_name']} {$result['last_name']}</td><td>{$result['biography']}</td><td>{$result['qualification']}</td><td><img src='data:image/jpeg;base64, $img' alt=''></td><td>{$result['medical_specialisation']}</td></tr>";
+        }
+    }
     public function printProcedures(PDO $database):void
     {
         if (isset($_COOKIE['category'])){
