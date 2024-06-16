@@ -16,7 +16,11 @@ class Admin extends Cardiologist
      public function check_insert($database): void
      {
         if (isset($_POST['add_doctor'])) {
+            $email = strtolower($_POST['email']);
+            $email = trim($email);
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $biography = trim($_POST['biography']);
+            $qualification = trim($_POST['qualification']);
             if (isset($_POST['push']))
                 $push = 1;
             else
@@ -24,8 +28,8 @@ class Admin extends Cardiologist
             $img = addslashes(file_get_contents($_FILES['photo']['tmp_name']));
             $img_type = substr($_FILES['photo']['type'], 0, 5);
             if ($img_type === 'image'){
-                $query = "insert into users (first_name, last_name, email, password, push, role_ID) values ('{$_POST['first_name']}', '{$_POST['last_name']}', '{$_POST['email']}', '$password', $push, 3);
-insert into employees (ID, biography, qualification, photo, medical_specialisation_ID) values ((select max(ID) from users), '{$_POST['biography']}', '{$_POST['qualification']}', '$img', {$_POST['medical_specialisation_ID']});";
+                $query = "insert into users (first_name, last_name, email, password, push, role_ID) values ('{$_POST['first_name']}', '{$_POST['last_name']}', '$email', '$password', $push, 3);
+insert into employees (ID, biography, qualification, photo, medical_specialisation_ID) values ((select max(ID) from users), '$biography', '$qualification', '$img', {$_POST['medical_specialisation_ID']});";
                 $this->insert($database, $query);
             }
             else{
