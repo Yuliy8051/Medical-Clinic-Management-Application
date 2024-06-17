@@ -1,5 +1,5 @@
 <?php
-class Admin extends Cardiologist
+class Admin extends User
 {
     public function __construct($ID, string $first_name, string $last_name, string $email, string $password, bool $push, int $role_ID)
     {
