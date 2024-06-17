@@ -13,7 +13,15 @@ class Admin extends User
             printf('<option value="%d">%s</option>', $result['ID'], $result['medical_specialisation']);
         }
     }
-     public function check_insert($database): void
+    public function printNewsTypes(PDO $database):void
+    {
+        $query = "select * from news_types";
+        $query_result = $database->query($query);
+        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)) {
+            printf('<option value="%d">%s</option>', $result['ID'], $result['type']);
+        }
+    }
+     public function check_insert(PDO $database): void
      {
         if (isset($_POST['add_doctor'])) {
             $email = strtolower($_POST['email']);
@@ -36,14 +44,25 @@ insert into employees (ID, biography, qualification, photo, medical_specialisati
                 echo 'The file must be image';
             }
         }
+        elseif (isset($_POST['add_news'])){
+            $name = trim($_POST['name']);
+            $news = trim($_POST['news']);
+            $news = preg_replace("/'/", "\'", $news);
+            $time = strftime("%Y-%m-%d %H:%M:%S", time());
+            $query = "insert into news (name, news, time, type_ID) values ('$name', '$news', '$time', {$_POST['type']})";
+            $this->insert($database, $query);
+        }
      }
-     public function insert($database, $query): void
+     public function insert(PDO $database, $query): void
      {
+         $database->beginTransaction();
          try {
             $database->query($query);
+            $database->commit();
             header("Location:administration.php");
          } catch (Exception $exception) {
             echo $exception->getMessage();
+            $database->rollBack();
          }
      }
 }

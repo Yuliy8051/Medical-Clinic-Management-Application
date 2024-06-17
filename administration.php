@@ -9,11 +9,10 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link rel="stylesheet" href="style.css">
     </head>
     <body>
     <form method="post" enctype="multipart/form-data">
-        <h2>Add Doctor</h2>
+        <h2>Add a Doctor</h2>
         <input type="text" name="first_name" placeholder="First Name" required>
         <input type="text" name="last_name" placeholder="Last Name" required>
         <input type="email" name="email" placeholder="Email" required>
@@ -28,6 +27,16 @@ session_start();
             <?php $_SESSION['user']->printMedicalSpecialisations($database); ?>
         </select>
         <input type="submit" name="add_doctor" value="Add Person">
+    </form>
+    <form method="post">
+        <h2>Add a news</h2>
+        <input type="text" name="name" placeholder="News Name" required>
+        <input type="text" name="news" placeholder="News property" required>
+        <label for="news_type">News type:</label>
+        <select id="news_type" name="type">
+            <?php $_SESSION['user']->printNewsTypes($database); ?>
+        </select>
+        <input type="submit" name="add_news" value="Add News">
     </form>
     </body>
     </html>
