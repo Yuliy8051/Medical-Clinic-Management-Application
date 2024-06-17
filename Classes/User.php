@@ -91,6 +91,18 @@ from users join employees on users.ID = employees.ID join medical_specialisation
             printf("<option value='%d'>%s</option>", $result['ID'], $result['category']);
         }
     }
+    public function printNews(PDO $database):void
+    {
+        $query = "select * from news order by time desc;";
+        $query_result = $database->query($query);
+        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
+            $time = substr($result['time'], 0, 16);
+            echo "<h2>{$result['name']}</h2>";
+            echo "<p>$time</p>";
+            echo "<p>{$result['news']}</p>";
+            echo "<hr>";
+        }
+    }
     public static function create(PDO $database, string $email, string $password)
     {
         $email = strtolower($email);
