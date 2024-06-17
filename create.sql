@@ -1,8 +1,10 @@
 create table News
 (
     ID      int primary key auto_increment,
-    time    datetime not null,
-    type_ID smallint not null
+    name    varchar(255) not null,
+    news    text         not null,
+    time    datetime     not null,
+    type_ID smallint     not null
 );
 create table News_types
 (
