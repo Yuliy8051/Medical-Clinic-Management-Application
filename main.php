@@ -16,7 +16,7 @@ $database = connect_to_database();
         <a href="edit_my_account.php"><button>Edit my account</button></a>
         <a href="medical_procedures.php"><button>Medical procedures</button></a>
         <a href="doctor_list.php"><button>Doctors list</button></a>
-        <a href="googleMap.html"><button>Our location</button></a>
+        <a href="map/googleMap.html"><button>Our location</button></a>
         <?php
         if ($_SESSION['user']->getRoleID() == 2)
             echo '<a href="administration.php"><button>Administration panel</button></a>';
