@@ -12,7 +12,7 @@ $database = connect_to_database();
         <title>Main page</title>
     <body>
     <nav>
-        <a href="logout.php"><button>Log out</button></a>
+        <a href="log/logout.php"><button>Log out</button></a>
         <a href="edit_my_account.php"><button>Edit my account</button></a>
         <a href="medical_procedures.php"><button>Medical procedures</button></a>
         <a href="doctor_list.php"><button>Doctors list</button></a>
@@ -24,6 +24,8 @@ $database = connect_to_database();
             echo '<a href="doctor.php"><button>Doctor panel</button></a>';
         if ($_SESSION['user']->getRoleID() == 1)
             echo '<a href="cardiology_visits.php"><button>My cardiology visits</button></a>';
+        if ($_SESSION['user']->getRoleID() == 1)
+            echo '<a href="calendar/choose_doctor_and_specialisation.php"><button>Make an appointment with a doctor</button></a>';
         ?>
     </nav>
     <h1>News Section</h1>

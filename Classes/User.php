@@ -60,12 +60,22 @@ class User
     }
     public function printDoctors(PDO $database):void
     {
-        $query = "select users.first_name, users.last_name, employees.biography, employees.qualification, employees.photo, medical_specialisations.medical_specialisation 
+        if(isset($_POST['specialisation'])){
+            $query = "select employees.ID, first_name, last_name from users join employees on users.ID = employees.ID where medical_specialisation_ID = {$_POST['specialisation']}";
+            $query_result = $database->query($query);
+            while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
+                printf('<option value="%d">%s</option>', $result['ID'], $result['first_name'] . " " . $result['last_name']);
+            }
+
+        }
+        else{
+            $query = "select users.first_name, users.last_name, employees.biography, employees.qualification, employees.photo, medical_specialisations.medical_specialisation 
 from users join employees on users.ID = employees.ID join medical_specialisations on employees.medical_specialisation_ID = medical_specialisations.ID where role_ID = 3;";
-        $query_result = $database->query($query);
-        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
-            $img = base64_encode($result['photo']);
-            echo "<tr><td>{$result['first_name']} {$result['last_name']}</td><td>{$result['biography']}</td><td>{$result['qualification']}</td><td><img src='data:image/jpeg;base64, $img' alt=''></td><td>{$result['medical_specialisation']}</td></tr>";
+            $query_result = $database->query($query);
+            while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
+                $img = base64_encode($result['photo']);
+                echo "<tr><td>{$result['first_name']} {$result['last_name']}</td><td>{$result['biography']}</td><td>{$result['qualification']}</td><td><img src='data:image/jpeg;base64, $img' alt=''></td><td>{$result['medical_specialisation']}</td></tr>";
+            }
         }
     }
     public function printProcedures(PDO $database):void

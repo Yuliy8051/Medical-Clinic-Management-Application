@@ -1,6 +1,8 @@
 <?php
+require_once 'printMedicalSpecialisations.php';
 class Patient extends User
 {
+    use printMedicalSpecialisations;
     public function __construct(int $ID, string $first_name, string $last_name, string $email, string $password, bool $push)
     {
         parent::__construct($ID, $first_name, $last_name, $email, $password, $push, 1);
@@ -17,6 +19,60 @@ class Patient extends User
         while ($result = $query_result->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr><td>{$result["time"]}</td><td>{$result["meeting_description"]}</td><td>{$result["recommendation"]}</td><td>{$result["first_name"]} {$result["last_name"]}</td></tr>";
         }
+    }
+    public function chooseDoctor(PDO $database)
+    {
+        if (isset($_POST['specialisation'])){
+            $query = "select medical_specialisation from medical_specialisations where ID = {$_POST['specialisation']}";
+            $query_result = $database->query($query);
+            $result = $query_result->fetch(PDO::FETCH_ASSOC);
+            ?>
+            <form method="post" action="../calendar/calendar.php">
+                <span>Choose a specialisation you need: <?php echo $result['medical_specialisation']?></span>
+                <label for="doctor">Choose a specialisation you need: </label>
+                <select id="doctor" name="doctor">
+                    <?php $this->printDoctors($database); ?>
+                </select>
+                <input type="submit" value="Choose">
+            </form>
+            <?php
+        }else{
+            ?>
+            <form method="post">
+                <label for="specialisation">Choose a specialisation you need: </label>
+                <select id="specialisation" name="specialisation">
+                    <?php $this->printMedicalSpecialisations($database); ?>
+                </select>
+                <input type="submit" value="Choose">
+            </form>
+            <?php
+        }
+    }
+    public function printHours(PDO $database)
+    {
+        $query = "select time from visits where time > now() and doctor_ID = {$_COOKIE['doctor']}";
+        $query_result = $database->query($query);
+        $result = $query_result->fetchAll(PDO::FETCH_COLUMN);
+        for ($k = 0; $k < count($result); $k++) {
+            $result[$k] = substr($result[$k], 0, 16);
+        }
+        for ($i = 8; $i < 17; $i++) {
+            for ($j = 0; $j < 60; $j += 30) {
+                $time = sprintf("{$_POST['date']} $i:%02d", $j);
+                if (in_array($time, $result)){
+                    printf("<span style='background-color: red'>$i:%02d</span>", $j);
+                }
+                else{
+                    printf("<input type='submit' name='hour' value='$i:%02d'>", $j);
+                }
+            }
+        }
+    }
+    public function makeAppointment(PDO $database)
+    {
+        $query = "insert into visits (time, patient_ID, doctor_ID) VALUES ('{$_COOKIE['date']} {$_POST['hour']}:00', $this->ID, {$_COOKIE['doctor']})";
+        $database->query($query);
+        header('Location:../main.php');
     }
 }
 ?>

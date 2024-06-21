@@ -1,17 +1,11 @@
 <?php
+require_once 'printMedicalSpecialisations.php';
 class Admin extends User
 {
+    use printMedicalSpecialisations;
     public function __construct($ID, string $first_name, string $last_name, string $email, string $password, bool $push, int $role_ID)
     {
         parent::__construct($ID, $first_name, $last_name, $email, $password, $push, $role_ID);
-    }
-    public function printMedicalSpecialisations(PDO $database):void
-    {
-        $query = "select * from medical_specialisations";
-        $query_result = $database->query($query);
-        while ($result = $query_result->fetch(PDO::FETCH_ASSOC)) {
-            printf('<option value="%d">%s</option>', $result['ID'], $result['medical_specialisation']);
-        }
     }
     public function printNewsTypes(PDO $database):void
     {
