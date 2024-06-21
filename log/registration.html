@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="registrationStyle.css">
+</head>
+<body>
+    <h1>Registration</h1>
+    <form action="registration.php" method="post">
+        <label>
+            <input type="text" placeholder="name" name="name" required>
+        </label>
+        <label>
+            <input type="text" placeholder="surname" name="surname" required>
+        </label>
+        <label>
+            <input name="email" type="email" placeholder="e-mail" required>
+        </label>
+        <label>
+            <input type="password" placeholder="password" name="password" required>
+        </label>
+        <label for="push">Do you what to get push messages from us?</label>
+        <input id="push" type="checkbox" name="push">
+            <span><button>Log up</button></span>
+        </form>
+</body>
+</html>
