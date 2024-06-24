@@ -9,13 +9,9 @@ $surname = $_POST['surname'];
 $email = strtolower($_POST['email']);
 $password = $_POST['password'];
 $pattern = "/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>])[A-Za-z\d!@#$%^&*(),.?:{}|<>]{6,}$/";
-if (isset($_POST['push']))
-    $push = true;
-else
-    $push = false;
 if (preg_match($pattern, $password)){
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $patient = new Patient(0, $name, $surname, $email, $password, $push);
+    $patient = new Patient(0, $name, $surname, $email, $password);
     $patient->insertPatient($database);
     header('Location:../index.php');
 }

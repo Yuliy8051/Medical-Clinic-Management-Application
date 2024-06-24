@@ -3,9 +3,9 @@ require_once 'printMedicalSpecialisations.php';
 class Admin extends User
 {
     use printMedicalSpecialisations;
-    public function __construct($ID, string $first_name, string $last_name, string $email, string $password, bool $push, int $role_ID)
+    public function __construct($ID, string $first_name, string $last_name, string $email, string $password, int $role_ID)
     {
-        parent::__construct($ID, $first_name, $last_name, $email, $password, $push, $role_ID);
+        parent::__construct($ID, $first_name, $last_name, $email, $password, $role_ID);
     }
     public function printNewsTypes(PDO $database):void
     {
@@ -17,25 +17,37 @@ class Admin extends User
     }
      public function check_insert(PDO $database): void
      {
-        if (isset($_POST['add_doctor'])) {
+        if (isset($_POST['add_doctor']) || isset($_POST['add_assistant']) || isset($_POST['add_admin']) || isset($_POST['add_patient'])) {
             $email = strtolower($_POST['email']);
             $email = trim($email);
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $biography = trim($_POST['biography']);
-            $qualification = trim($_POST['qualification']);
-            if (isset($_POST['push']))
-                $push = 1;
-            else
-                $push = 0;
-            $img = addslashes(file_get_contents($_FILES['photo']['tmp_name']));
-            $img_type = substr($_FILES['photo']['type'], 0, 5);
-            if ($img_type === 'image'){
-                $query = "insert into users (first_name, last_name, email, password, push, role_ID) values ('{$_POST['first_name']}', '{$_POST['last_name']}', '$email', '$password', $push, 3);
+            if (isset($_POST['add_doctor']) || isset($_POST['add_assistant']) || isset($_POST['add_admin'])){
+                if (isset($_POST['add_doctor']) || isset($_POST['add_assistant'])) {
+                    $biography = trim($_POST['biography']);
+                    $qualification = trim($_POST['qualification']);
+                }
+                $img = addslashes(file_get_contents($_FILES['photo']['tmp_name']));
+                $img_type = substr($_FILES['photo']['type'], 0, 5);
+                if ($img_type === 'image'){
+                    if (isset($_POST['add_doctor']))
+                        $query = "insert into users (first_name, last_name, email, password, role_ID) values ('{$_POST['first_name']}', '{$_POST['last_name']}', '$email', '$password', 3);
 insert into employees (ID, biography, qualification, photo, medical_specialisation_ID) values ((select max(ID) from users), '$biography', '$qualification', '$img', {$_POST['medical_specialisation_ID']});";
-                $this->insert($database, $query);
+                    elseif (isset($_POST['add_admin'])){
+                        $query = "insert into users (first_name, last_name, email, password, role_ID) values ('{$_POST['first_name']}', '{$_POST['last_name']}', '$email', '$password', 3);
+insert into employees (ID, qualification, photo) values ((select max(ID) from users), 'admin', '$img');";
+                    }
+                    else
+                        $query = "insert into users (first_name, last_name, email, password, role_ID) values ('{$_POST['first_name']}', '{$_POST['last_name']}', '$email', '$password', 4);
+insert into employees (ID, biography, qualification, photo, medical_specialisation_ID) values ((select max(ID) from users), '$biography', '$qualification', '$img', {$_POST['medical_specialisation_ID']});";
+                    $this->insert($database, $query);
+                }
+                else{
+                    echo 'The file must be image';
+                }
             }
-            else{
-                echo 'The file must be image';
+            else {
+                $query = "insert into users (first_name, last_name, email, password, role_ID) VALUES ('{$_POST['first_name']}', '{$_POST['last_name']}', '$email', '$password', 1)";
+                $this->insert($database, $query);
             }
         }
         elseif (isset($_POST['add_news'])){

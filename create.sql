@@ -56,7 +56,6 @@ create table Users
     last_name  varchar(255) not null,
     email      varchar(255) not null unique,
     password   varchar(255) not null,
-    push       bool         not null,
     role_ID    smallint     not null
 );
 create table Cardiologist_visits

@@ -3,13 +3,13 @@ require_once 'printMedicalSpecialisations.php';
 class Patient extends User
 {
     use printMedicalSpecialisations;
-    public function __construct(int $ID, string $first_name, string $last_name, string $email, string $password, bool $push)
+    public function __construct(int $ID, string $first_name, string $last_name, string $email, string $password)
     {
-        parent::__construct($ID, $first_name, $last_name, $email, $password, $push, 1);
+        parent::__construct($ID, $first_name, $last_name, $email, $password, 1);
     }
     public function insertPatient($database): void
     {
-        $query = "insert into users (first_name, last_name, email, password, push, role_ID) values ('$this->first_name', '$this->last_name', '$this->email', '$this->password', '$this->push', 1);";
+        $query = "insert into users (first_name, last_name, email, password, role_ID) values ('$this->first_name', '$this->last_name', '$this->email', '$this->password', 1);";
         $database->query($query);
     }
     public function printVisits(PDO $database)

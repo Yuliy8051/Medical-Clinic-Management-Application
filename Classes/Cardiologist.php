@@ -1,9 +1,9 @@
 <?php
 class Cardiologist extends Doctor
 {
-    public function __construct(int $ID, string $first_name, string $last_name, string $email, string $password, bool $push, int $role_ID)
+    public function __construct(int $ID, string $first_name, string $last_name, string $email, string $password, int $role_ID)
     {
-        parent::__construct($ID, $first_name, $last_name, $email, $password, $push, $role_ID, 3);
+        parent::__construct($ID, $first_name, $last_name, $email, $password, $role_ID, 3);
     }
     public function printPatients(PDO $database):void
     {

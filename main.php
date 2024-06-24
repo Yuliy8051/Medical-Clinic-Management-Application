@@ -19,7 +19,7 @@ $database = connect_to_database();
         <a href="map/googleMap.html"><button>Our location</button></a>
         <?php
         if ($_SESSION['user']->getRoleID() == 2)
-            echo '<a href="administration.php"><button>Administration panel</button></a>';
+            echo '<a href="administration/administration.php"><button>administration panel</button></a>';
         if ($_SESSION['user']->getRoleID() == 3)
             echo '<a href="doctor.php"><button>Doctor panel</button></a>';
         if ($_SESSION['user']->getRoleID() == 1)
