@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My cardiology visits</title>
+    <link rel="stylesheet" href="cardiology_visitsStyle.css">
 </head>
 <body>
 <table>
@@ -14,7 +15,7 @@
     </tr>
 <?php
 require_once 'functions.php';
-require_once 'Classes/User.php';
+require_once 'Classes/AbstractUser.php';
 session_start();
 $database = connect_to_database();
 $_SESSION['user']->printVisits($database);
