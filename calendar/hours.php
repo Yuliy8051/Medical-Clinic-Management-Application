@@ -1,5 +1,5 @@
 <?php
-require_once '../Classes/User.php';
+require_once '../Classes/AbstractUser.php';
 require_once '../functions.php';
 $database = connect_to_database();
 session_start();
@@ -9,6 +9,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>Make an appointment with a doctor</title>
+    <link rel="stylesheet" href="hoursStyle.css">
 </head>
 <body>
 <?php
@@ -17,7 +18,8 @@ if (isset($_POST['hour'])){
 }else{
     setcookie('date', $_POST['date'], time() + 24*60*60);
 ?>
-<form method="post">
+<h1>Choose an hour</h1>
+<form class="hours" method="post">
     <?php $_SESSION['user']->printHours($database) ?>
 </form>
 <?php }?>

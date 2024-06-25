@@ -293,10 +293,10 @@ create trigger add_history
     for each row
 begin
     if old.first_name != new.first_name or old.last_name != new.last_name or old.email != new.email or
-       old.password != new.password or old.push != new.push or old.role_ID != new.role_ID then
+       old.password != new.password or old.role_ID != new.role_ID then
         insert into Users_history (information, change_time, user_ID)
         values (json_object('first_name', old.first_name, 'last_name', old.last_name, 'email', old.email, 'password',
-                            old.password, 'push', old.push, 'role_ID', old.role_ID), current_timestamp(), new.ID);
+                            old.password, 'role_ID', old.role_ID), current_timestamp(), new.ID);
     end if;
 end;
 create trigger is_cardiologist1

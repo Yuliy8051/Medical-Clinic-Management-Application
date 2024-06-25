@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit my account</title>
+    <link rel="stylesheet" href="edit_my_accountStyle.css">
 </head>
 <body>
-<form method="post">
-  <input type="email" name="new_email" placeholder="New Email" required>
-  <input type="submit" name="edit_email" value="Edit email">
+<form class="editEmail" method="post">
+    <h1>Edit</h1>
+    <label>
+        <input type="email" name="new_email" placeholder="New Email" required>
+    </label>
+    <button type="submit" name="edit_email">Edit email</button>
 </form>
-<form method="post">
-    <input type="password" name="new_password" placeholder="New Password" required>
-    <input type="submit" name="edit_password" value="Edit password">
+<form class="editPassword" method="post">
+    <label>
+        <input type="password" name="new_password" placeholder="New Password" required>
+    </label>
+    <button type="submit" name="edit_password">Edit password</button>
 </form>
 </body>
 </html>
 <?php
 require_once 'functions.php';
-require_once 'Classes/User.php';
+require_once 'Classes/AbstractUser.php';
 $database = connect_to_database();
 session_start();
 if(isset($_POST['edit_email']))

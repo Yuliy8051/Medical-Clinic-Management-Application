@@ -32,5 +32,10 @@ button {
     background-color: #333;
     color: #fff;
     border-radius: 5px;
-    border-width: 0px;
+    border-width: 0;
+}
+.absolute {
+    position: absolute;
+    right: 1%;
+    top: 0;
 }

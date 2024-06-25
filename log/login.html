@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Medical Clinic Management Application</title>
+    <link rel="stylesheet" href="logStyle.css">
 </head>
 <body>
 <h1>Log in</h1>
 <form method="post" action="login.php">
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required>
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="log in">
+    <label for="email">
+        <input type="email" name="email" id="email" placeholder="Email" required>
+    </label>
+    <label for="password">
+        <input type="password" name="password" id="password" placeholder="Password" required>
+    </label>
+    <span><button type="submit">Log in</button></span>
 </form>
-<a href="registration.html"><button>Log up</button></a>
+<a class="absolute" href="registration.html"><button>Log up</button></a>
 </body>
 </html>

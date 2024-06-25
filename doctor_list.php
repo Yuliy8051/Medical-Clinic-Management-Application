@@ -1,5 +1,5 @@
 <?php
-require_once 'Classes/User.php';
+require_once 'Classes/AbstractUser.php';
 require_once 'functions.php';
 session_start();
 $database = connect_to_database();
@@ -9,19 +9,13 @@ $database = connect_to_database();
 <head>
     <meta charset="UTF-8">
     <title>Doctor list</title>
+    <link rel="stylesheet" href="doctor_listStyle.css">
 </head>
 <body>
-<table>
-    <tr>
-        <td>Name</td>
-        <td>Biography</td>
-        <td>Qualification</td>
-        <td>Photography</td>
-        <td>Medical specialisation</td>
+<div class="grid">
         <?php
         $_SESSION['user']->printDoctors($database);
         ?>
-    </tr>
-</table>
+</div>
 </body>
 </html>

@@ -1,10 +1,6 @@
 <?php
-require_once 'Patient.php';
-require_once 'Assistant.php';
-require_once 'Doctor.php';
-require_once 'Cardiologist.php';
-require_once 'Admin.php';
-class User
+require_once 'printDoctors.php';
+class User  implements printDoctors
 {
     protected int $ID;
     protected string $first_name;
@@ -72,7 +68,15 @@ from users join employees on users.ID = employees.ID join medical_specialisation
             $query_result = $database->query($query);
             while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
                 $img = base64_encode($result['photo']);
-                echo "<tr><td>{$result['first_name']} {$result['last_name']}</td><td>{$result['biography']}</td><td>{$result['qualification']}</td><td><img src='data:image/jpeg;base64, $img' alt=''></td><td>{$result['medical_specialisation']}</td></tr>";
+                ?>
+                <div class="block">
+                    <img src='data:image/jpeg;base64, <?php echo $img ?>' alt=''>
+                    <p><span>Name:</span> <?php echo $result['first_name'] . " " . $result['last_name']?></p>
+                    <p><span>Biography:</span> <?php echo $result['biography']?></p>
+                    <p><span>Qualification:</span> <?php echo $result['qualification']?></p>
+                    <p><span>Medical specialisation:</span> <?php echo $result['medical_specialisation']?></p>
+                </div>
+                <?php
             }
         }
     }
@@ -87,7 +91,14 @@ from users join employees on users.ID = employees.ID join medical_specialisation
         }
         $query_result = $database->query($query);
         while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
-            echo "<tr><td>{$result['name']}</td><td>{$result['description']}</td><td>{$result['price']} zł</td><td>{$result['category']}</td></tr>";
+            ?>
+            <div class="flex">
+                <p class="name"><?php echo $result['name'] ?></p>
+                <p class="description"><?php echo $result['description'] ?></p>
+                <p class="price"><span><?php echo $result['price'] ?></span> zł</p>
+                <p class="category"><?php echo $result['category'] ?></p>
+            </div>
+            <?php
         }
 
     }
@@ -105,9 +116,9 @@ from users join employees on users.ID = employees.ID join medical_specialisation
         $query_result = $database->query($query);
         while ($result = $query_result->fetch(PDO::FETCH_ASSOC)){
             $time = substr($result['time'], 0, 16);
-            echo "<h2>{$result['name']}</h2>";
-            echo "<p>$time</p>";
-            echo "<p>{$result['news']}</p>";
+            echo "<h2 class='newsTitle'>{$result['name']}</h2>";
+            echo "<p class='time'>$time</p>";
+            echo "<p class='news'>{$result['news']}</p>";
             echo "<hr>";
         }
     }

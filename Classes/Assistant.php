@@ -1,5 +1,4 @@
 <?php
-
 class Assistant extends User
 {
     protected int|null $medical_specialisation_ID;

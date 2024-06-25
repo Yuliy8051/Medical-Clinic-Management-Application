@@ -1,5 +1,5 @@
 <?php
-require_once '../Classes/User.php';
+require_once '../Classes/AbstractUser.php';
 require_once '../functions.php';
 $database = connect_to_database();
 session_start();
@@ -9,6 +9,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>Make an appointment with a doctor</title>
+    <link rel="stylesheet" href="calendarStyle.css">
 </head>
 <body>
 <?php

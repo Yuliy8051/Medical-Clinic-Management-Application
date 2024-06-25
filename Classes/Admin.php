@@ -52,6 +52,7 @@ insert into employees (ID, biography, qualification, photo, medical_specialisati
         }
         elseif (isset($_POST['add_news'])){
             $name = trim($_POST['name']);
+            $name = preg_replace("/'/", "\'", $name);
             $news = trim($_POST['news']);
             $news = preg_replace("/'/", "\'", $news);
             $time = strftime("%Y-%m-%d %H:%M:%S", time());
@@ -65,7 +66,6 @@ insert into employees (ID, biography, qualification, photo, medical_specialisati
          try {
             $database->query($query);
             $database->commit();
-            header("Location:administration.php");
          } catch (Exception $exception) {
             echo $exception->getMessage();
             $database->rollBack();

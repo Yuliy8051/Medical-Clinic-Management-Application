@@ -1,6 +1,6 @@
 <?php
 require_once '../functions.php';
-require_once "../Classes/User.php";
+require_once "../Classes/AbstractUser.php";
 $database = connect_to_database();
 if ($database->errorCode())
     die('end');

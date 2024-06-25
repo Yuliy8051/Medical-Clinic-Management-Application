@@ -27,23 +27,27 @@ class Patient extends User
             $query_result = $database->query($query);
             $result = $query_result->fetch(PDO::FETCH_ASSOC);
             ?>
-            <form method="post" action="../calendar/calendar.php">
-                <span>Choose a specialisation you need: <?php echo $result['medical_specialisation']?></span>
-                <label for="doctor">Choose a specialisation you need: </label>
-                <select id="doctor" name="doctor">
-                    <?php $this->printDoctors($database); ?>
-                </select>
-                <input type="submit" value="Choose">
+            <form class="flex" method="post" action="../calendar/calendar.php">
+                <div class="specialisation">Choose a specialisation you need: <?php echo $result['medical_specialisation']?></div>
+                <div>
+                    <label for="doctor">Choose a specialisation you need: </label>
+                    <select id="doctor" name="doctor">
+                        <?php $this->printDoctors($database); ?>
+                    </select>
+                    <input type="submit" value="Choose">
+                </div>
             </form>
             <?php
         }else{
             ?>
-            <form method="post">
-                <label for="specialisation">Choose a specialisation you need: </label>
-                <select id="specialisation" name="specialisation">
-                    <?php $this->printMedicalSpecialisations($database); ?>
-                </select>
-                <input type="submit" value="Choose">
+            <form class="flex" method="post">
+                <div class="specialisation">
+                    <label for="specialisation">Choose a specialisation you need: </label>
+                    <select id="specialisation" name="specialisation">
+                        <?php $this->printMedicalSpecialisations($database); ?>
+                    </select>
+                    <input type="submit" value="Choose">
+                </div>
             </form>
             <?php
         }
@@ -60,7 +64,7 @@ class Patient extends User
             for ($j = 0; $j < 60; $j += 30) {
                 $time = sprintf("{$_POST['date']} $i:%02d", $j);
                 if (in_array($time, $result)){
-                    printf("<span style='background-color: red'>$i:%02d</span>", $j);
+                    printf("<input type='submit' style='background-color: red; color: black' value='$i:%02d' disabled>", $j);
                 }
                 else{
                     printf("<input type='submit' name='hour' value='$i:%02d'>", $j);

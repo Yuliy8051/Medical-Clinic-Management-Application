@@ -1,0 +1,40 @@
+html {
+    box-sizing: border-box;
+}
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+body,
+* {
+    margin: 0;
+    padding: 0;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 1145px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+.block {
+    max-width: 100%;
+    background-color: rgba(136, 231, 255, 0.4);
+    border-radius: 20px;
+}
+.block img {
+    width: 100%;
+    height: 340px;
+    border-radius: 20px 20px 0 0;
+    object-fit: cover;
+}
+.block p{
+    padding: 10px;
+    font-weight: normal;
+    color: #000000
+}
+.block span{
+    font-weight: bold;
+    color: orange
+}
